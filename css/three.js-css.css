@@ -1,0 +1,51 @@
+
+
+#header1 {
+	position:relative;
+	z-index:3;
+	top:0px;
+	width:50%;
+	height:32px;
+	padding-top:5px;
+	background-color:white;
+	font-size:32px;
+	text-align:center;
+	
+}
+#header1 span,#header a {
+	margin-left:4px;
+	margin-right:4px;
+	
+
+}
+
+span.left{
+	font-weight:normal;
+	color:#000000;
+	float:left;
+	margin-left:4px;
+}
+
+span.right{
+	color:#000000;
+	float:right;
+	margin-right:4px;
+}
+
+span.right span, span.right a{
+	padding-left: 12px;
+}
+
+
+.white{
+	color:white !important;
+	text-shadow: none !important;
+}
+
+#canvas {
+	z-index:5;
+	width:300px;
+	height:500px;
+	
+}
+

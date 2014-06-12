@@ -1,0 +1,916 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Web GL</title>
+<link href="css/mycss.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="scripts/bootstrap/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" />
+<style type="text/css">
+body {
+	background-color: #F0F0F0;
+}
+</style>
+<!-- script for color picker-->
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/three.js-css.css"/>
+<script type="text/javascript" src="scripts/threejs/three.min.js"></script>
+<script type="text/javascript" src="scripts/threejs/TrackballControls.js"></script>
+<script type="text/javascript" src="scripts/threejs/CanvasGeometry.js"></script>
+
+<link href='http://fonts.googleapis.com/css?family=Merienda+One' rel='stylesheet' type='text/css'>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-22830227-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script>
+    $(function() {
+        $('#tabs').tabs();
+    });
+</script>
+</head>
+
+<body>
+<div id="main">
+  <div id="menu"> 
+  	<div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      File
+    </button>
+    <ul class="dropdown-menu">
+      <li><a href="#">New</a></li>
+      <li><a href="#">Open</a></li>
+      <li><a href="#">Save</a></li>
+      <li><a href="#">Export</a></li>
+    </ul>
+  </div>
+  <div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      Edit
+    </button>
+    <ul class="dropdown-menu">
+      <li><a href="#">Copy</a></li>
+      <li><a href="#">Cut</a></li>
+      <li><a href="#">Paste</a></li>
+      <li><a href="#">Delete</a></li>
+      <li><a href="#">Undo</a></li>
+      <li><a href="#">Redo</a></li>
+    </ul>
+  </div>
+  <div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      View
+    </button>
+    <ul class="dropdown-menu">
+      <li><a href="#">Text color</a></li>
+      <li><a href="#">Text texture</a></li>
+      <li><a href="#">Face color</a></li>
+      <li><a href="#">Face texture</a></li>
+      <li><a href="#">Side color</a></li>
+      <li ><a href="#" class="lineborder">Side texture</a></li>
+      <li><a href="#">Background color</a></li>
+      <li ><a href="#" class="lineborder">Background texture</a></li>
+      <li><a href="#" class="lineborder">Button text color</a></li>
+      <li><a href="#">Display lighting</a></li>
+      <li><a href="#">Light color 1..</a></li>
+      <li><a href="#">Light color 2..</a></li>
+      <li><a href="#" class="lineborder">Light color 3..</a></li>
+      <li><a href="#">Start animation</a></li>
+    </ul>
+  </div>
+  <div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      Desige    </button>
+    <ul class="dropdown-menu">
+      <li><a href="#">Text</a></li>
+      <li><a href="#">Button</a></li>
+      <li><a href="#">Border</a></li>
+      <li><a href="#">Border+Holes</a></li>
+      <li><a href="#">Border</a></li>
+    </ul>
+  </div>
+  <div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      Option    </button>
+    <ul class="dropdown-menu">
+      <li><a href="#">Text</a></li>
+      <li><a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="collapsed">
+          Color Option
+        </a>
+      </li>
+      <li><a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed">Extrude</a></li>
+      <li><a data-toggle="collapse" data-parent="#accordion" href="#collapseFour" class="collapsed">Bevels</a></li>
+      <li><a data-toggle="collapse" data-parent="#accordion" href="#collapseFive" class="collapsed">Shadow</a></li>
+      <li><a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" class="collapsed">Texture.</a></li>
+      <li><a data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" class="collapsed">View</a></li>
+      <li><a data-toggle="collapse" data-parent="#accordion" href="#collapseEight" class="collapsed">Animation</a></li>
+    </ul>
+  </div>
+  
+  <div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      Help
+    </button>
+    <ul class="dropdown-menu">
+      <li><a href="#">MaramSoft 3D maker 1 help</a></li>
+    </ul>
+  </div>
+  </div>
+<div id="header">
+	header
+</div>
+<div id="maincontent">
+<div id = "slidebutleft">
+<script>
+for (var i = 0;i <= 13;i++ )
+{
+	document.write('<div id="but'+i+'" class=" height-but but'+i+'"></div>');
+	}
+	var buttonactive = document.getElementsByClassName('height-but');
+		for(var i = 1; i < buttonactive.length ; i++)
+		{
+			
+			buttonactive[i].addEventListener('click' ,activeBut);
+
+		}
+		function activeBut(event) {
+			var myID = this.id;
+			var myActive = "active"+myID;
+			deactivatedAll();
+			document.getElementById(myID).className = myActive+' height-but'; 
+			
+			function deactivatedAll(){
+			
+				for (var j = 1; j < buttonactive.length; j++) {
+	
+					buttonactive[j].className = 'height-but but'+j ;
+				
+				}
+			}
+		}
+		
+
+</script>
+</div>
+<div id="slide2">
+<canvas style="position:absolute;display:none;" id="canvas"></canvas>
+	<canvas style="position:absolute; width:65% !important" id="glcanvas" ></canvas>
+	
+	
+	<div id="header1" style="padding:5px">
+			Input text here <input id="usertext"  name="userimage"  type="text" style="border:1px solid black;vertical-align:middle;
+" onkeyup="handleText();"><br/>
+	</div>
+</div>
+<script>
+
+/**CanvasGeometry demo
+ * @author Yannis Gravezas / http://revoxel.com/
+ */
+
+
+var mesh=null;
+
+// This is the 2D canvas we'll draw our text in order to produce
+// a solid geometry from it's pictures
+var canvas = $("#canvas")[0];
+var ctx = canvas.getContext("2d");
+var iw=1024;
+var ih=128;
+canvas.width= iw;
+canvas.height = ih;
+
+// We set color, font and other properties for text drawing
+ctx.fillStyle="#000000";
+ctx.font = "70px Merienda One";
+ctx.textAlign = "center";
+ctx.textBaseLine = "middle";
+
+var container, camera, controls, scene, renderer, cross,scale=1,rotate=0,thr=3;
+
+// This is the material we'll use to skin our models
+var cm=new THREE.MeshPhongMaterial( { color:0x666666,shading: THREE.SmoothShading} );
+    	
+// This handler is attached on the text input field
+var handleText = function() {
+        
+        // if we have already created a model remove it
+		if(mesh) scene.remove(mesh);
+		
+		// Remember start time for benchmarking
+        var start=Date.now();
+        
+        // This is the input text
+    	var txt = $("#usertext").val();
+    	
+    	// Clear the 2D canvas to white
+    	ctx.clearRect(0,0,iw,ih);
+    	
+    	// Draw the text on the 2D canvas
+    	ctx.fillText(txt,iw/2,ih/2,iw);
+    	
+    	
+    	// This line perform the rite technique on the 2D canvas pixels
+    	// And produces a solid geometry. In our case it is text but
+    	// It can be any image as long as it has transparent areas.
+    	var g = new THREE.CanvasGeometry(canvas,{"height":0.01,"solid":true,"offset":3,"steps":1});
+    	
+    	
+    	// We present some benchmarking info
+    	var diff = Date.now()-start;
+    	$("#info").html(parseInt(iw*window.scale)+"x"+parseInt(ih*window.scale)+" pixels, "+g.vertices.length+" vertices, "+g.faces.length+" faces, "+diff+" msec");
+        
+        // We combine the geometry with a material and present it on screen
+        mesh=new THREE.Mesh(g,cm);
+        mesh.position.x=-0.5;
+		mesh.position.y=-0.5*(canvas.height/canvas.width);
+		scene.add(mesh);
+		render();
+    }
+    
+// This function converts the three.js mesh to an .obj geometry file
+// that we can download and inspect with meshlab or other programs
+function obj(){
+	if(!mesh) return;
+	var g=mesh.geometry;
+	var vs=g.vertices,fs=g.faces,uvs=g.faceVertexUvs[0],sv="",sn="\n",st="\n",sf="\n",i=0,ni=0;
+	g.computeVertexNormals();
+	for(i=0;i!=vs.length;i++){
+		sv += "v "+vs[i].x+" "+vs[i].y+" "+vs[i].z+"\n";
+	}
+	for(i=0;i!=fs.length;i++,ni+=3){
+		sn += "vn "+fs[i].vertexNormals[0].x+" "+fs[i].vertexNormals[0].y+" "+fs[i].vertexNormals[0].z+"\n";
+		sn += "vn "+fs[i].vertexNormals[1].x+" "+fs[i].vertexNormals[1].y+" "+fs[i].vertexNormals[1].z+"\n";
+		sn += "vn "+fs[i].vertexNormals[2].x+" "+fs[i].vertexNormals[2].y+" "+fs[i].vertexNormals[2].z+"\n";
+		st += "vt "+uvs[i][0].x+" "+uvs[i][0].y+"\n";
+		st += "vt "+uvs[i][1].x+" "+uvs[i][1].y+"\n";
+		st += "vt "+uvs[i][2].x+" "+uvs[i][2].y+"\n";
+		sf += "f "+(fs[i].a+1)+"/"+(ni+1)+"/"+(ni+1)+" "+(fs[i].b+1)+"/"+(ni+2)+"/"+(ni+2)+" "+(fs[i].c+1)+"/"+(ni+3)+"/"+(ni+3)+"\n";
+		//sf += "f "+(fs[i].a+1)+" "+(fs[i].b+1)+" "+(fs[i].c+1)+"\n";
+	
+	}
+	return [sv,sn,st,sf];
+}
+
+// This is the handler for the download link on the bottom right of the page
+var bob=null;
+function gen(){
+	var b = new Blob(obj());
+	if(bob) window.URL.revokeObjectURL(bob);
+	bob = window.URL.createObjectURL(b);
+	return bob;
+}
+	
+// From here on it's a typical three.js setup
+
+function onWindowResize() {
+
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+	
+	renderer.setSize( window.innerWidth, window.innerHeight );
+
+	controls.handleResize();
+
+	render();
+
+}
+			
+function animate() {
+
+	requestAnimationFrame( animate );
+	controls.update();
+
+}
+
+function render() {
+
+	renderer.render( scene, camera );
+
+}
+	
+function init() {
+		
+	var glCanvas = $("#glcanvas")[0];
+	var gl = glCanvas.getContext("webgl");
+	if (!gl) {
+		gl = glCanvas.getContext("experimental-webgl");
+	}
+	if (!gl) {
+		alert("Your browser doesn't seem to support webgl")
+		return;
+	}
+ 
+   
+    var SCREEN_WIDTH = window.innerWidth;
+	var SCREEN_HEIGHT = window.innerHeight;
+	camera = new THREE.PerspectiveCamera( 60, SCREEN_WIDTH / SCREEN_HEIGHT, 0.01, 10 ); 
+	camera.position.z = 0.3;
+	
+	controls = new THREE.TrackballControls( camera , glCanvas);
+
+	controls.rotateSpeed = 1.0;
+	controls.zoomSpeed = 1.2;
+	controls.panSpeed = 0.8;
+	
+	controls.noRotate = false;
+	controls.noZoom = false;
+	controls.noPan = false;
+
+	controls.staticMoving = true;
+	controls.dynamicDampingFactor = 0.3;
+
+	controls.keys = [ 65, 83, 68 ];
+
+	controls.addEventListener("change",render);
+	
+	scene = new THREE.Scene();
+	
+	
+	light = new THREE.DirectionalLight( 0xAAAAAA );
+	light.position.set( 0.3, 0.2, 1 );
+	scene.add( light );
+
+	light = new THREE.DirectionalLight( 0x222288 );
+	light.position.set( -1, -1, 1 );
+	scene.add( light );
+
+	light = new THREE.AmbientLight( 0x333333 );
+	scene.add( light );
+	
+	renderer = new THREE.WebGLRenderer( { antialias: true, "canvas":glCanvas,"depthWrite":true } );
+	renderer.setClearColor( 0xFFFFFF, 1 );
+	
+	window.onWindowResize();
+	window.addEventListener( 'resize', window.onWindowResize, false );
+	
+	animate();
+}
+$(document).ready(init);
+</script>
+<div id="slide3">
+<div class="panel-group" id="accordion">
+	<div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+          Color Option
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in">
+      <div class="panel-body">
+      <div class="row">
+          <div class="col-md-6">
+          <select class="form-control">
+              <option>Text </option>
+              <option>Text faces</option>
+              <option>Text sides</option>
+              <option>Border</option>
+              <option>Border & texts</option>
+              <option>Border & texts, sides</option>
+              <option>Background</option>
+              <option>Light 1</option>
+              <option>Light 2</option>
+              <option>Light 3</option>
+          </select>
+          </div>
+          <div class="col-md-6">
+              <label class="checkbox-inline">
+              <input type="checkbox" id="inlineCheckbox1" value="option1"> Texture
+              </label>
+              <label class="checkbox-inline">
+              <input type="checkbox" id="inlineCheckbox2" value="option2"> Tint
+              </label>
+          </div>
+          
+      </div>
+      <div class="row">
+				<span class="cp-basic" style="display: inline-block; vertical-align: top;margin:5px;"></span>
+
+				<script>
+					$(function() {
+						$('.cp-basic').colorpicker();
+					});
+				</script>
+      </div>
+    </div>
+  </div>
+  </div>
+      <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+          Extrusion option
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse">
+      <div class="panel-body">
+        
+              Apply to 
+              <input type="radio" name="textdesign1"  value="option1"> Text
+              <input type="radio" name="textdesign1"  value="option2"> Design
+              <br />
+              <form>
+            Depth: <input name="dataslider" id="dataslider" type="text" size="2" height="9px" onchange="$('#slide').val($('#dataslider').val())"/>
+  			<input name="slide" id="slide" type="range" min="0" max="100" value="9" onchange="$('#dataslider').val($('#slide').val())">
+		   </form>
+           <br />
+           <form>
+            Outline: <input name="dataslider1" id="dataslider1" type="text" size="2" height="9px" onchange="$('#slide1').val($('#dataslider1').val())"/>
+  			<input name="slide1" id="slide1" type="range" min="0" max="100" value="9" onchange="$('#dataslider1').val($('#slide1').val())">
+		   </form>
+            <br />
+            <form >
+           <div class="leftmargin">
+           <input name="mattgloss" type="radio" value="matt" /> Matt 
+           <br />
+           <input name="mattgloss" type="radio" value="gloss" /> Gloss
+           </div>
+           <div >
+           <input name="frontface" type="checkbox" value="frontface" /> Front Face<br />
+           <input name="backface" type="checkbox" value="backface" /> Back Face
+           </div>
+           </form>
+      </div>
+    </div>
+     </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+              Design option
+            </a>
+          </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse">
+          <div class="panel-body"> 
+ 			  <div class="row panelmargin">         
+              <div class="pull-left">
+              	<select name="border">
+                	<option>Text</option>
+                    <option>Button</option>
+                    <option>Board</option>
+                    <option>Board + holes</option>
+                    <option>Boarder</option>
+                </select>
+              </div>	
+              <div class="pull-right">
+				<select name="rounded">
+                	<option>Rounder</option>
+                    <option>Rectangle</option>
+                    <option>Rounded Rectangle</option>
+                    <option>Beveled rectangle</option>
+                    <option>Incut rectangle</option>
+                    <option>Diamond</option>
+                    <option>incut rectangle</option>
+                    <option>Triangle</option>
+                    <option>Inverted Triangle</option>
+                    <option>Octagon</option>
+                </select>
+              </div>
+             </div>
+              
+          </div>
+               <div class="row panelmargin">       
+               <form>
+           <div class="pull-left"> Border Width: </div>
+           <div class="pull-right">
+           <input name="dataslider2" id="dataslider2" type="text" size="2" placeholder="9" height="9px" onchange="$('#slidehandle2').val($('#dataslider2').val())"/>
+  			<input name="slidehandle" id="slidehandle" type="range" min="0" max="200" value="9" onchange="$('#dataslider2').val($('#slidehandle').val())">
+            </div>
+		     </form>
+             </div>
+             <div class="row panelmargin">
+              <form>
+           <div class="pull-left"> Stretch:</div>
+           <div class="pull-right">
+            <input name="dataslider3" id="dataslider3" type="text" size="2" placeholder="50%" height="9px" onchange="$('#slidehandle3').val($('#dataslider3').val())"/>
+  			<input name="slidehandle3" id="slidehandle3" type="range" min="20" max="500" value="50" onchange="$('#dataslider3').val($('#slidehandle3').val()+'%')">
+            </div>
+		   </form>
+            </div> 
+            <div class="row panelmargin">
+              <form>
+           <div class="pull-left"> Corner:</div>
+           <div class="pull-right">
+            <input name="dataslider4" id="dataslider4" type="text" size="2" placeholder="9%" height="9px" onchange="$('#slidehandle4').val($('#dataslider4').val())"/>
+  			<input name="slidehandle4" id="slidehandle4" type="range" min="0" max="200" value="9" onchange="$('#dataslider4').val($('#slidehandle4').val()+'%')">
+            </div>
+		   </form>
+            </div>  
+              <div class="row panelmargin">
+              <form>
+           <div class="pull-left"> Size:
+           
+            <input name="dataslider5" id="dataslider5" type="text" size="2" placeholder="50%" height="9px" onchange="$('#slidehandle5').val($('#dataslider5').val())"/>
+  			<input name="slidehandle4" id="slidehandle5" type="range" min="25" max="400" value="50" onchange="$('#dataslider5').val($('#slidehandle5').val()+'%')" >
+            </div>
+            <div class="pull-right">
+            X:
+           
+            <input name="dataslider6" id="dataslider6" type="text" size="2" placeholder="9%" height="9px" onchange="$('#slidehandle6').val($('#dataslider6').val())"/>
+  			<input name="slidehandle6" id="slidehandle6" type="range" min="-100" max="100" value="9" onchange="$('#dataslider6').val($('#slidehandle6').val()+'%')" >
+            </div>
+		   </form>
+            </div> 
+              <div class="row panelmargin">
+              <form>
+           <div class="pull-left"> Angle:
+           
+            <input name="dataslider7" id="dataslider7" type="text" size="2" placeholder="9&deg;" height="9px" onchange="$('#slidehandle7').val($('#dataslider7').val())"/>
+  			<input name="slidehandle7" id="slidehandle7" type="range" min="-180" max="180" value="9" onchange="$('#dataslider7').val($('#slidehandle7').val()+'&deg;')">
+            </div>
+            <div class="pull-right">
+            Y:
+           
+            <input name="dataslider8" id="dataslider8" type="text" size="2"  placeholder="9%" height="9px" onchange="$('#slidehandle8').val($('#dataslider8').val())"/>
+  			<input name="slidehandle8" id="slidehandle8" type="range" min="-100" max="100" value="9" onchange="$('#dataslider8').val($('#slidehandle8').val()+'%')">
+            </div>
+		   </form>
+            </div> 
+            <br />   
+		</div>
+        </div>
+     <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+              Bevel option
+            </a></h4>
+        </div>
+        <div id="collapseFour" class="panel-collapse collapse">
+          <div class="panel-body">
+            Apply to 
+              <input type="radio" name="textdesign1"  value="option1"> Text
+              <input type="radio" name="textdesign1"  value="option2"> Design
+              <br />
+              <br />
+              <div class="row panelmargin">
+               <form id="form1" name="form1" method="post" action="">
+				<div class="pull-left">
+					<select multiple class="form-control" style="height:120px;">
+                      <option value="bevel0">None</option>
+                      <option value="bevel1">30&deg; Bevel</option>
+                      <option value="bevel2">45&deg; Bevel</option>
+                      <option value="bevel3">60&deg; Bevel</option>
+                      <option value="rounded">Rounded</option>
+                      <option value="smoothed1a">Smoothed 1a</option>
+                      <option value="smoothed1b">Smoothed 1b</option>					 					  <option value="smoothed2a">Smoothed 2a</option>
+                      <option value="smoothed2b">Smoothed 2b</option>
+                      <option value="squared">Squared</option>
+                      <option value="roundincut">Round incut</option>						
+                      <option value="squareincut">Square incut</option>
+                      <option value="fancyincut1">Fancy incut 1</option>
+                      <option value="fancyincut2">Fancy incut 2</option>
+                      <option value="fancyincut3">Fancy incut 3</option>
+                      <option value="curved">Curved</option>
+                      <option value="angled">Angled</option>
+                      <option value="rolled">Rolled</option>
+                      <option value="bumpy">Bumpy</option>
+                      <option value="roundfaced">Round faced</option>
+                      <option value="roundcornered1a">Round cornered 1a</option>
+                      <option value="roundcornered1b">Round cornered 1b</option>
+                      <option value="roundcornered2a">Round cornered 2a</option>
+                      <option value="roundcornered2b">Round cornered 2b</option>
+                      <option value="squarefaced">Square faced</option>
+                      <option value="squarecornered1">Square cornered 1</option>
+                      <option value="squarecornered2">Square cornered 2</option>
+                      <option value="trianglefaced">Triangle faced</option>
+                      <option value="trianglecornered1">Triangle cornered 1</option>
+                      <option value="trianglecornered2">Triangle cornered 2</option>
+                      <option value="anglefaced">Angle faced</option>
+                      <option value="anglecornered">Angle cornered</option>
+                      <option value="curvefaced1">Curve faced 1</option>
+                      <option value="curvefaced2">Curve faced 2</option>
+                      
+                  </select>
+                </div>
+                <div class="pull-right">
+                    <p>
+                      <label>
+                        <input type="radio" name="miterround" value="miter" id="miterround_0" />
+                        Miter</label>
+                      <br />
+                      <label>
+                        <input type="radio" name="miterround" value="round" id="miterround_1" />
+                        Round</label>
+                      <br />
+                    </p>
+                    <strong>Depth:</strong><br />
+                    <input name="dataslider9" id="dataslider9" type="text" size="2" placeholder="9" height="9px" onchange="$('#slidehandle9').val($('#dataslider9').val())"/>
+  			<input name="slidehandle9" id="slidehandle9" type="range" min="1" max="200" value="9" onchange="$('#dataslider9').val($('#slidehandle9').val())">
+                  
+                </div>
+                </form>
+              </div>
+          </div>
+        </div>
+  </div>
+    <div class="panel panel-default">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+  Shadow
+</a>
+</h4>
+</div>
+<div id="collapseFive" class="panel-collapse collapse">
+<div class="panel-body">
+<form>
+   <div class="row panelmargin">
+  <input name="shadow" id="shadow" type="checkbox" value="shadow" onclick="displayType();"/> Shadow
+  <script type="text/javascript">
+	function displayType() {
+
+    if(document.getElementById('shadow').checked) {
+        document.getElementById('style_0').disabled =false;
+		document.getElementById('style_1').disabled =false;
+		document.getElementById('slidehandle10').disabled =false;
+		document.getElementById('slidehandle11').disabled =false;
+		document.getElementById('dataslider10').disabled =false;
+		document.getElementById('dataslider11').disabled =false;
+		document.getElementById('newrow').style.color="#000";
+		document.getElementById('newrow1').style.color="#000";
+		document.getElementById('newrow2').style.color="#000";
+		
+    }
+    else {
+        document.getElementById('style_0').disabled=true;
+		document.getElementById('style_1').disabled=true;
+		document.getElementById('slidehandle10').disabled =true;
+		document.getElementById('slidehandle11').disabled =true;
+		document.getElementById('dataslider10').disabled =true;
+		document.getElementById('dataslider11').disabled =true;
+		document.getElementById('newrow').style.color="#ccc";
+		document.getElementById('newrow1').style.color="#ccc";
+		document.getElementById('newrow2').style.color="#ccc";
+		
+    }
+}
+
+  </script>
+  </div>
+  <div class="row panelmargin" id="newrow">
+  <p> 
+  
+  Style : 
+    <label>
+      <input type="radio" name="style_01" value="style1" id="style_0" disabled="disabled" />
+      1</label>
+   
+    <label>
+      <input type="radio" name="style_01" value="style2" id="style_1" disabled="disabled"/>
+      2</label>
+  </p>
+  </div>
+  <div class="row panelmargin" id="newrow1">
+  <div class="pull-left">
+  <strong>Trancperncy : </strong>
+  </div>
+  <div class="pull-right">
+                    <input name="dataslider10" id="dataslider10" type="text" size="2" placeholder="9%" height="9px" onchange="$('#slidehandle10').val($('#dataslider10').val())" disabled="disabled"/>
+  			<input name="slidehandle10" id="slidehandle10" type="range" min="0" max="95" value="9" onchange="$('#dataslider10').val($('#slidehandle10').val()+'%')" disabled="disabled" />
+            <br />
+   </div>
+   </div>
+   <div class="row panelmargin" id="newrow2">
+   <div class="pull-left">
+             <strong>Blur: </strong>
+   </div> 
+   <div class="pull-right">         
+                    <input name="dataslider11" id="dataslider11" type="text" size="2" placeholder="9%" height="9px" onchange="$('#slidehandle11').val($('#dataslider11').val())" disabled="disabled"/>
+  			<input name="slidehandle11" id="slidehandle11" type="range" min="0" max="100" value="9" onchange="$('#dataslider11').val($('#slidehandle11').val())" disabled="disabled" />
+   </div>
+   </div>
+</form>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
+  Texture option
+</a>
+</h4>
+</div>
+<div id="collapseSix" class="panel-collapse collapse">
+<div class="panel-body">
+        <form id="form2" name="form2" method="post" action="">
+        <div class="row panelmargin">
+        <div class="pull-left">
+        	<select>
+            <option>Text</option>
+            <option>Text faces</option>
+			<option>Text sides</option>
+            <option>Border</option>
+            <option>Border and text</option>
+            <option>Border and text and sides</option>
+            <option>Background</option>
+            </select>
+        </div>
+        <div class="pull-left">
+          
+            <p>
+              <label>
+                <input type="checkbox" name="texture" value="texture" id="texture" onclick="displayType1();"/>
+                <script type="text/javascript">
+				function displayType1() {
+					if(document.getElementById('texture').checked) {
+						document.getElementById('tint').disabled =false;
+						document.getElementById('dataslider12').disabled =false;
+						document.getElementById('slidehandle12').disabled =false
+						document.getElementById('dataslider13').disabled =false;
+						document.getElementById('slidehandle13').disabled =false
+						document.getElementById('dataslider14').disabled =false;
+						document.getElementById('slidehandle14').disabled =false
+						document.getElementById('dataslider15').disabled =false;
+						document.getElementById('slidehandle15').disabled =false
+						document.getElementById('tintlabel').style.color="#000";
+						document.getElementById('newrow3').style.color="#000";
+						document.getElementById('newrow4').style.color="#000";	
+					}
+					else {
+						document.getElementById('tint').disabled=true;
+						document.getElementById('dataslider12').disabled =true;
+						document.getElementById('slidehandle12').disabled =true;
+						document.getElementById('dataslider13').disabled =true;
+						document.getElementById('slidehandle13').disabled =true;
+						document.getElementById('dataslider14').disabled =true;
+						document.getElementById('slidehandle14').disabled =true;
+						document.getElementById('dataslider15').disabled =true;
+						document.getElementById('slidehandle15').disabled =true;
+						document.getElementById('tintlabel').style.color="#ccc";
+						document.getElementById('newrow3').style.color="#ccc";
+						document.getElementById('newrow4').style.color="#ccc";
+					}
+				}
+				</script>
+                 Texture</label>
+              <label id="tintlabel">
+                <input type="checkbox" name="tint" value="tint" id="tint" disabled="disabled"/>
+                Tint</label>
+            </p>
+        </div>
+        </div>
+        <div class="row panelmargin" id="newrow3">
+           <div class="pull-left"> Size:
+            <input name="dataslider12" type="text" disabled="disabled" id="dataslider12" placeholder="50%" onchange="$('#slidehandle12').val($('#dataslider12').val())" size="2" height="9px"/>
+  			<input name="slidehandle12" id="slidehandle12" type="range" disabled="disabled" min="25" max="400" value="50" onchange="$('#dataslider12').val($('#slidehandle12').val()+'%')" >
+            </div>
+            <div class="pull-right">
+            X:
+            <input name="dataslider13" type="text" disabled="disabled" id="dataslider13" placeholder="9%" onchange="$('#slidehandle13').val($('#dataslider6').val())" size="2" height="9px"/>
+  			<input name="slidehandle13" id="slidehandle13" type="range" min="-100" max="100" value="9" onchange="$('#dataslider13').val($('#slidehandle13').val()+'%')" disabled="disabled" >
+            </div>
+         </div> 
+        <div class="row panelmargin" id="newrow4"> 
+           <div class="pull-left"> Angle:
+            <input name="dataslider14" id="dataslider14" type="text" disabled="disabled" size="2" placeholder="9&deg;" height="9px" onchange="$('#slidehandle14').val($('#dataslider14').val())"/>
+  			<input name="slidehandle14" id="slidehandle14" type="range" disabled="disabled" min="-180" max="180" value="9" onchange="$('#dataslider14').val($('#slidehandle14').val()+'&deg;')">
+            </div>
+            <div class="pull-right">
+            Y:
+           
+            <input name="dataslider15" id="dataslider15" type="text" disabled="disabled" size="2"  placeholder="9%" height="9px" onchange="$('#slidehandle15').val($('#dataslider15').val())"/>
+  			<input name="slidehandle15" id="slidehandle15" type="range" disabled="disabled"  min="-100" max="100" value="9" onchange="$('#dataslider15').val($('#slidehandle15').val()+'%')">
+            </div>
+		 </div>  
+      </form>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a data-toggle="collapse" data-parent="#accordion" href="#collapseSeven">
+  View option
+</a>
+</h4>
+</div>
+<div id="collapseSeven" class="panel-collapse collapse">
+<div class="panel-body">
+			<form>
+			<div class="row panelcenter">X position:
+            <input name="dataslider16" type="text"  id="dataslider16" placeholder="500px" onchange="$('#slidehandle16').val($('#dataslider16').val())" size="3" height="9px"/>
+  			<input name="slidehandle16" id="slidehandle16" type="range"  min="-1000" max="1000" value="500" onchange="$('#dataslider16').val($('#slidehandle16').val()+'px')" >
+            </div>
+            <div class="row panelcenter">Y position:
+            <input name="dataslider17" type="text"  id="dataslider17" placeholder="500px" onchange="$('#slidehandle17').val($('#dataslider17').val())" size="3" height="9px"/>
+  			<input name="slidehandle17" id="slidehandle17" type="range"  min="-1000" max="1000" value="500" onchange="$('#dataslider17').val($('#slidehandle17').val()+'px')" >
+            </div>
+             <div class="row panelcenter">Rotation:
+            <input name="dataslider18" type="text"  id="dataslider18" placeholder="500&deg;" onchange="$('#slidehandle18').val($('#dataslider18').val())" size="3" height="9px"/>
+  			<input name="slidehandle18" id="slidehandle18" type="range"  min="-180" max="180" value="100" onchange="$('#dataslider18').val($('#slidehandle18').val()+'&deg;')" >
+            </div>
+             <div class="row panelcenter">Rotation:
+            <input name="dataslider19" type="text"  id="dataslider19" placeholder="10&deg;" onchange="$('#slidehandle19').val($('#dataslider19').val())" size="3" height="9px"/>
+  			<input name="slidehandle19" id="slidehandle19" type="range"  min="-90" max="90" value="10" onchange="$('#dataslider19').val($('#slidehandle19').val()+'&deg;')" >
+            </div>
+             <div class="row panelcenter">Rotation:
+            <input name="dataslider20" type="text"  id="dataslider20" placeholder="10&deg;" onchange="$('#slidehandle20').val($('#dataslider20').val())" size="3" height="9px"/>
+  			<input name="slidehandle20" id="slidehandle20" type="range"  min="-90" max="90" value="10" onchange="$('#dataslider20').val($('#slidehandle20').val()+'&deg;')" >
+            </div>
+             <div class="row panelcenter">ViewPort:
+            <input name="dataslider21" type="text"  id="dataslider21" placeholder="100%" onchange="$('#slidehandle21').val($('#dataslider21').val())" size="3" height="9px"/>
+  			<input name="slidehandle21" id="slidehandle21" type="range"  min="0" max="200" value="100" onchange="$('#dataslider21').val($('#slidehandle21').val()+'%')" >
+            </div>
+            <div class="row panelcenter">
+            <input name="wireframe" type="checkbox" value="wireframe" />Wireframe
+            </div>
+</div>
+		</form>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a data-toggle="collapse" data-parent="#accordion" href="#collapseEight">
+  Animation option
+</a>
+</h4>
+</div>
+<div id="collapseEight" class="panel-collapse collapse">
+<div class="panel-body">
+<form action="" method="get" role="form">
+<div class="row panelmargin">
+Frames Per Cycle : <input type="text" size="3" disabled="disabled"/>
+</div>
+<div class="row panelmargin">
+Frames Per Cycle : <input type="text" size="3" />&nbsp;&nbsp;&nbsp;Pause: <input type="text" size="3"/>
+</div>
+<div class="row panelmargin">
+LOOPS: <input type="text" size="3"/> Times GIF only
+</div>
+<div class="row panelmargin">
+Style:
+<select>
+<option>Scroll</option>
+<option>Scroll in /out</option>
+<option>Rotate</option>
+<option>Swing</option>
+<option>Pulsate</option>
+<option>Ripple head</option>
+<option>Fade</option>
+<option>Step</option>
+<option>Typewriter</option>
+<option>Pulse</option>
+</select>
+</div>
+<div class="row panelmargin">
+<fieldset>
+Scroll IN <br />
+speed <input type="text" placeholder="160" /><br />
+Profile <input type="text" placeholder="0%" /><br/>
+<div class="horizontalimg"></div>
+<div class="verticalimg"></div>
+<div class="rotatimg"></div>
+<div class="angelimg"></div>
+</fieldset>
+</div>
+<div class="row panelmargin">
+<fieldset >
+Scroll Out <br />
+speed <input type="text" placeholder="500" />
+<br />
+Profile <input type="text" placeholder="0%" />
+<div class="horizontalimg"></div>
+<div class="verticalimg"></div>
+<div class="rotatimg"></div>
+<div class="angelimg"></div>
+</fieldset>
+</div>
+</form>
+</div>
+</div>
+</div>		 
+</div>
+</div>
+</div>
+<div id="footer">
+Designed and develop by MaramSoft 2014 &copy; CopyRight </div>
+</div>
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>		
+<script type="text/javascript" src="scripts/bootstrap/js/bootstrap.min.js"></script>
+<script src="scripts/colorpicker-master/jquery.colorpicker.js"></script>
+<link href="scripts/colorpicker-master/jquery.colorpicker.css" rel="stylesheet" type="text/css"/>
+<script src="scripts/colorpicker-master/i18n/jquery.ui.colorpicker-nl.js"></script>
+<script src="scripts/colorpicker-master/swatches/jquery.ui.colorpicker-pantone.js"></script>
+<script src="scripts/colorpicker-master/parts/jquery.ui.colorpicker-rgbslider.js"></script>
+<script src="scripts/colorpicker-master/parts/jquery.ui.colorpicker-memory.js"></script>
+<script src="scripts/colorpicker-master/parsers/jquery.ui.colorpicker-cmyk-parser.js"></script>
+<script src="scripts/colorpicker-master/parsers/jquery.ui.colorpicker-cmyk-percentage-parser.js"></script>
