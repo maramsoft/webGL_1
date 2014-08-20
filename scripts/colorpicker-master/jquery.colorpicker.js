@@ -1264,7 +1264,9 @@
 						html += '<input class="ui-colorpicker-hex-alpha" type="text" maxlength="2" size="2"/>';
 					}
 
-					html += '<input class="ui-colorpicker-hex-input" type="text" maxlength="6" size="6"/>';
+					html += '<input class="ui-colorpicker-hex-input" type="text" id="colorname" maxlength="6" size="6" onchange="window.alert(\'hi\')"/>';
+					// i add the id and alret 
+					
 
 					return '<div class="ui-colorpicker-hex"><label>#</label>' + html + '</div>';
 				};

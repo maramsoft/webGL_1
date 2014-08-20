@@ -40,7 +40,47 @@ body {
 </script>
 </head>
 
-<body>
+<body onload="$('#myModal').modal('show')">
+<!-- Modal code load when you open the website -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Welcome to MaramSoft 3D maker Demo</h4>
+      </div>
+      <div class="modal-body">
+      	<p>
+            The whole idea about the project is how to use WebGL through Javascript libraries, 
+            the one I am using is Three.js, which is a very mature library, we use it on the text and convert 
+            it to 3D scene without using any traditional 3D programs or plugin, which are difficult to use and maintain, 
+            and take a lot of computer memory and resources.
+        </p>
+        <p>
+            you can start creating a 3D text with the following steps: 
+    			<ul>
+                	<li> Start typing to enter the text you want. You can delete existing text using backspace.</li>
+    				<li> Change the opacity and depth if you wish form the toolbar in the right side of the window.</li>
+				    <li> Change the color of the text and/or background.</li> 
+   					<li> Resize the text to set the size you want. </li>
+    				<li> Use the correct buttons to apply animation on the text</li>
+                </ul>    
+    		Note: By dragging the text itself you can change the view angle of the text.
+            You can also add a shadow and drag it to the required position, and drag the text to get the angle you want. 
+        </p>
+        <iframe width="560" height="315" src="http://www.youtube.com/embed/DW9NHZ7IGtw" frameborder="0" allowfullscreen></iframe>
+        <p>
+        <br />
+        you can click on help in menu bar for more information
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
 <div id="main">
   <div id="menu"> 
   	<div class="btn-group">
@@ -105,7 +145,7 @@ body {
     <ul class="dropdown-menu">
       <li><a href="#">Text</a></li>
       <li><a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="collapsed">
-          Color Option
+          Color Options
         </a>
       </li>
       <li><a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed">Extrude</a></li>
@@ -122,19 +162,60 @@ body {
       Help
     </button>
     <ul class="dropdown-menu">
-      <li><a href="#">MaramSoft 3D maker 1 help</a></li>
+      <li><a href="http://www.youtube.com/embed/DW9NHZ7IGtw" target="_blank">MaramSoft 3D maker Demo</a></li>
+      <li><a href="http://maram.uni.me/research/master_report.pdf" target="_blank">View Documentation</a></li>
+      <li><a href="https://github.com/maramsoft/webGL_1" target="_blank">Download source file</a></li>
     </ul>
   </div>
   </div>
 <div id="header">
-	header
+<script>
+function playMotion(){
+	window.intervalId = setInterval(
+	function(){
+		var motionType= document.getElementById("styleMotion").value;
+		if(motionType == "x") {
+			mesh.position.x < 0.35 ? mesh.position.x+=0.01 : mesh.position.x = -1.2;
+		}
+		else if(motionType == "yz") {
+			mesh.position.y > -0.31 ? mesh.position.y-=0.01 : mesh.position.y = 0.13;
+			mesh.position.z < 0.2 ? mesh.position.z+=0.01 : mesh.position.z = -0.8;
+		}
+		else if(motionType == "y") {
+			mesh.position.y > -0.31 ? mesh.position.y-=0.01 : mesh.position.y = 0.13;
+		}
+		else {
+			mesh.position.z < 0.2 ? mesh.position.z+=0.01 : mesh.position.z = -0.8;
+		}
+		render();
+	}, 100);
+}
+function pauseMotion() {
+	clearInterval(window.intervalId)
+}
+function stopMotion() {
+	pauseMotion();
+	mesh.position.set(-0.5, -0.0625, 0);
+	render();
+}
+function changeShadow(value) {
+	mesh.scale.z = value;
+}
+</script>
+	click here to start motion: 
+    <img src="images/play.jpg" width="22" height="25" onclick="playMotion()"/>
+    <img src="images/pause.jpg" width="20" height="28" onclick="pauseMotion()"/>
+    <img src="images/stop.jpg" width="20" height="25" onclick="stopMotion()" />
 </div>
 <div id="maincontent">
 <div id = "slidebutleft">
 <script>
 for (var i = 0;i <= 13;i++ )
 {
-	document.write('<div id="but'+i+'" class=" height-but but'+i+'"></div>');
+	
+		document.write('<a><div id="but'+i+'" class=" height-but but'+i+'"></div></a>');
+		
+	
 	}
 	var buttonactive = document.getElementsByClassName('height-but');
 		for(var i = 1; i < buttonactive.length ; i++)
@@ -147,7 +228,8 @@ for (var i = 0;i <= 13;i++ )
 			var myID = this.id;
 			var myActive = "active"+myID;
 			deactivatedAll();
-			document.getElementById(myID).className = myActive+' height-but'; 
+			document.getElementById(myID).className = myActive+' height-but';
+			location.href='#collapseTwo';
 			
 			function deactivatedAll(){
 			
@@ -167,17 +249,12 @@ for (var i = 0;i <= 13;i++ )
 	<canvas style="position:absolute; width:65% !important" id="glcanvas" ></canvas>
 	
 	
-	<div id="header1" style="padding:5px">
-			Input text here <input id="usertext"  name="userimage"  type="text" style="border:1px solid black;vertical-align:middle;
-" onkeyup="handleText();"><br/>
+	<div id="header1" style="padding: 5px; background-color: transparent;">
+		<input id="usertext" name="userimage" placeholder="Write Text Here" type="text" style="border: 1px solid black; vertical-align: middle;
+ background-color: rgba(0,0,0,0.1);" onkeyup="handleText();"><br/>
 	</div>
 </div>
 <script>
-
-/**CanvasGeometry demo
- * @author Yannis Gravezas / http://revoxel.com/
- */
-
 
 var mesh=null;
 
@@ -196,10 +273,10 @@ ctx.font = "70px Merienda One";
 ctx.textAlign = "center";
 ctx.textBaseLine = "middle";
 
-var container, camera, controls, scene, renderer, cross,scale=1,rotate=0,thr=3;
+var container, camera, controls, scene, renderer, cross, scale = 1,rotate = 0,thr = 3;
 
 // This is the material we'll use to skin our models
-var cm=new THREE.MeshPhongMaterial( { color:0x666666,shading: THREE.SmoothShading} );
+var cm=new THREE.MeshPhongMaterial( { transparent: true, opacity: 1, color:0x666666,shading: THREE.SmoothShading} );
     	
 // This handler is attached on the text input field
 var handleText = function() {
@@ -312,7 +389,7 @@ function init() {
 	}
  
    
-    var SCREEN_WIDTH = window.innerWidth;
+  var SCREEN_WIDTH = window.innerWidth;
 	var SCREEN_HEIGHT = window.innerHeight;
 	camera = new THREE.PerspectiveCamera( 60, SCREEN_WIDTH / SCREEN_HEIGHT, 0.01, 10 ); 
 	camera.position.z = 0.3;
@@ -337,7 +414,7 @@ function init() {
 	scene = new THREE.Scene();
 	
 	
-	light = new THREE.DirectionalLight( 0xAAAAAA );
+	light = new THREE.DirectionalLight( 0xFF0000 );
 	light.position.set( 0.3, 0.2, 1 );
 	scene.add( light );
 
@@ -348,13 +425,21 @@ function init() {
 	light = new THREE.AmbientLight( 0x333333 );
 	scene.add( light );
 	
-	renderer = new THREE.WebGLRenderer( { antialias: true, "canvas":glCanvas,"depthWrite":true } );
+	renderer = new THREE.WebGLRenderer( { "antialias": true, "canvas": glCanvas, "depthWrite": true } );
 	renderer.setClearColor( 0xFFFFFF, 1 );
 	
 	window.onWindowResize();
 	window.addEventListener( 'resize', window.onWindowResize, false );
 	
 	animate();
+
+  window.translateColor = function (r, g, b) {
+    var _r = Math.round(r / 255 * 10) / 10;
+    var _g = Math.round(g / 255 * 10) / 10;;
+    var _b = Math.round(b / 255 * 10) / 10;;
+
+    return { r: _r,g: _g,b: _b}
+  }
 }
 $(document).ready(init);
 </script>
@@ -368,21 +453,13 @@ $(document).ready(init);
         </a>
       </h4>
     </div>
-    <div id="collapseOne" class="panel-collapse collapse in">
+  <div id="collapseOne" class="panel-collapse collapse in">
       <div class="panel-body">
       <div class="row">
           <div class="col-md-6">
-          <select class="form-control">
+          <select class="form-control" id="backgroundColorSelect">
               <option>Text </option>
-              <option>Text faces</option>
-              <option>Text sides</option>
-              <option>Border</option>
-              <option>Border & texts</option>
-              <option>Border & texts, sides</option>
-              <option>Background</option>
-              <option>Light 1</option>
-              <option>Light 2</option>
-              <option>Light 3</option>
+              <option value="bg">Background</option>
           </select>
           </div>
           <div class="col-md-6">
@@ -401,13 +478,175 @@ $(document).ready(init);
 				<script>
 					$(function() {
 						$('.cp-basic').colorpicker();
+            setTimeout(function () {
+              $('.ui-colorpicker-map-layer-pointer').on('click', function () {
+                var r = $('.ui-colorpicker-rgb-r > .ui-colorpicker-number').val(),
+                  b = $('.ui-colorpicker-rgb-b > .ui-colorpicker-number').val(),
+                  g = $('.ui-colorpicker-rgb-g > .ui-colorpicker-number').val();
+                
+				if($("#backgroundColorSelect").val() == "bg") {
+					
+					var color="0x" + $('#colorname').val();
+					renderer.setClearColor(parseInt(color),1);
+					
+				}
+				else {
+					scene.children[0].color = translateColor(r, g, b);
+				}
+                render();
+              });
+            }, 2000);
 					});
 				</script>
       </div>
     </div>
   </div>
   </div>
-      <div class="panel panel-default">
+  <div class="panel panel-default">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+  Shadow
+</a>
+</h4>
+</div>
+<div id="collapseFive" class="panel-collapse collapse">
+<div class="panel-body">
+<form>
+   <div class="row panelmargin">
+  <input name="shadow" id="shadow" type="checkbox" value="shadow" onclick="displayType();"/> Shadow
+  <script type="text/javascript">
+	function displayType() {
+
+    if(document.getElementById('shadow').checked) {
+		document.getElementById('slidehandle10').disabled =false;
+		document.getElementById('slidehandle11').disabled =false;
+		document.getElementById('dataslider10').disabled =false;
+		document.getElementById('dataslider11').disabled =false;
+		document.getElementById('newrow1').style.color="#000";
+		document.getElementById('newrow2').style.color="#000";
+		
+    }
+    else {
+		document.getElementById('slidehandle10').disabled =true;
+		document.getElementById('slidehandle11').disabled =true;
+		document.getElementById('dataslider10').disabled =true;
+		document.getElementById('dataslider11').disabled =true;
+		document.getElementById('newrow1').style.color="#ccc";
+		document.getElementById('newrow2').style.color="#ccc";
+		
+    }
+}
+
+  </script>
+  </div>
+  <div class="row panelmargin" id="newrow1">
+  <div class="pull-left">
+  <strong>Depth: </strong>
+  </div>
+  <script>
+	  function changeShadow(type) {
+		  var shadowSize;
+		  if(type == 1) {
+			  shadowSize = $('#dataslider10').val() || 1;
+			  $('#slidehandle10').val(shadowSize);
+		  }
+		  else {
+			  shadowSize = $('#slidehandle10').val() || 1;
+			  $('#dataslider10').val(shadowSize)
+		  }
+		  mesh.scale.z = parseInt(shadowSize);
+		  render();
+	  }
+  </script>
+  <div class="pull-right">
+   <input name="dataslider10" id="dataslider10" type="text" size="3" placeholder="1" height="9px" onchange="changeShadow(1)" disabled="disabled"/>
+   <input name="slidehandle10" id="slidehandle10" type="range" min="0" max="20" value="9" onchange="changeShadow(2)" disabled="disabled" />
+   <br />
+   </div>
+   </div>
+   <div class="row panelmargin" id="newrow2">
+   <script>
+	  function changeOpacity(type) {
+		  var opacitySize;
+		  if(type == 1) {
+			  opacitySize = $('#dataslider11').val() || 1;
+			  $('#slidehandle11').val(opacitySize);
+		  }
+		  else {
+			  opacitySize = $('#slidehandle11').val() || 1;
+			  $('#dataslider11').val(opacitySize)
+		  }
+		  mesh.material.opacity = parseFloat(opacitySize);
+		  render();
+	  }
+  </script>
+   <div class="pull-left">
+             <strong>Opacity: </strong>
+   </div> 
+   <div class="pull-right">         
+            <input name="dataslider11" id="dataslider11" type="text" size="3" placeholder="1" height="9px" onchange="changeOpacity(1)" disabled="disabled"/>
+  			<input name="slidehandle11" id="slidehandle11" type="range" step="0.1" min="0" max="1" value="1" onchange="changeOpacity(2)" disabled="disabled" />
+   </div>
+   </div>
+</form>
+</div>
+</div>
+</div>
+  <div class="panel panel-default">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a data-toggle="collapse" data-parent="#accordion" href="#collapseEight">
+  Animation option
+</a>
+</h4>
+</div>
+<div id="collapseEight" class="panel-collapse collapse">
+<div class="panel-body">
+<form action="" method="get" role="form">
+<div class="row panelmargin">
+Frames Per Cycle : <input type="text" size="3" disabled="disabled"/>
+</div>
+<div class="row panelmargin">
+Frames Per Cycle : <input type="text" size="3" />&nbsp;&nbsp;&nbsp;Pause: <input type="text" size="3"/>
+</div>
+<div class="row panelmargin">
+Style:
+<select id="styleMotion">
+    <option value="yz">Scroll in /out</option>
+    <option value="x">Scroll</option>
+    <option value="z">zoom</option>
+    <option value="y">Scroll up /out</option>
+</select>
+</div>
+<div class="row panelmargin">
+<fieldset>
+Scroll IN <br />
+speed <input type="text" placeholder="160" /><br />
+Profile <input type="text" placeholder="0%" /><br/>
+<div class="horizontalimg"></div>
+<div class="verticalimg"></div>
+<div class="rotatimg"></div>
+<div class="angelimg"></div>
+</fieldset>
+</div>
+<div class="row panelmargin">
+<fieldset >
+Scroll Out <br />
+speed <input type="text" placeholder="500" />
+<br />
+Profile <input type="text" placeholder="0%" />
+<div class="horizontalimg"></div>
+<div class="verticalimg"></div>
+<div class="rotatimg"></div>
+<div class="angelimg"></div>
+</fieldset>
+</div>
+</form>
+</div>
+</div>
+</div>
+  <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
@@ -618,86 +857,7 @@ $(document).ready(init);
           </div>
         </div>
   </div>
-    <div class="panel panel-default">
-<div class="panel-heading">
-<h4 class="panel-title">
-<a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
-  Shadow
-</a>
-</h4>
-</div>
-<div id="collapseFive" class="panel-collapse collapse">
-<div class="panel-body">
-<form>
-   <div class="row panelmargin">
-  <input name="shadow" id="shadow" type="checkbox" value="shadow" onclick="displayType();"/> Shadow
-  <script type="text/javascript">
-	function displayType() {
-
-    if(document.getElementById('shadow').checked) {
-        document.getElementById('style_0').disabled =false;
-		document.getElementById('style_1').disabled =false;
-		document.getElementById('slidehandle10').disabled =false;
-		document.getElementById('slidehandle11').disabled =false;
-		document.getElementById('dataslider10').disabled =false;
-		document.getElementById('dataslider11').disabled =false;
-		document.getElementById('newrow').style.color="#000";
-		document.getElementById('newrow1').style.color="#000";
-		document.getElementById('newrow2').style.color="#000";
-		
-    }
-    else {
-        document.getElementById('style_0').disabled=true;
-		document.getElementById('style_1').disabled=true;
-		document.getElementById('slidehandle10').disabled =true;
-		document.getElementById('slidehandle11').disabled =true;
-		document.getElementById('dataslider10').disabled =true;
-		document.getElementById('dataslider11').disabled =true;
-		document.getElementById('newrow').style.color="#ccc";
-		document.getElementById('newrow1').style.color="#ccc";
-		document.getElementById('newrow2').style.color="#ccc";
-		
-    }
-}
-
-  </script>
-  </div>
-  <div class="row panelmargin" id="newrow">
-  <p> 
-  
-  Style : 
-    <label>
-      <input type="radio" name="style_01" value="style1" id="style_0" disabled="disabled" />
-      1</label>
-   
-    <label>
-      <input type="radio" name="style_01" value="style2" id="style_1" disabled="disabled"/>
-      2</label>
-  </p>
-  </div>
-  <div class="row panelmargin" id="newrow1">
-  <div class="pull-left">
-  <strong>Trancperncy : </strong>
-  </div>
-  <div class="pull-right">
-                    <input name="dataslider10" id="dataslider10" type="text" size="2" placeholder="9%" height="9px" onchange="$('#slidehandle10').val($('#dataslider10').val())" disabled="disabled"/>
-  			<input name="slidehandle10" id="slidehandle10" type="range" min="0" max="95" value="9" onchange="$('#dataslider10').val($('#slidehandle10').val()+'%')" disabled="disabled" />
-            <br />
-   </div>
-   </div>
-   <div class="row panelmargin" id="newrow2">
-   <div class="pull-left">
-             <strong>Blur: </strong>
-   </div> 
-   <div class="pull-right">         
-                    <input name="dataslider11" id="dataslider11" type="text" size="2" placeholder="9%" height="9px" onchange="$('#slidehandle11').val($('#dataslider11').val())" disabled="disabled"/>
-  			<input name="slidehandle11" id="slidehandle11" type="range" min="0" max="100" value="9" onchange="$('#dataslider11').val($('#slidehandle11').val())" disabled="disabled" />
-   </div>
-   </div>
-</form>
-</div>
-</div>
-</div>
+    
 <div class="panel panel-default">
 <div class="panel-heading">
 <h4 class="panel-title">
@@ -834,73 +994,13 @@ $(document).ready(init);
 		</form>
 </div>
 </div>
-<div class="panel panel-default">
-<div class="panel-heading">
-<h4 class="panel-title">
-<a data-toggle="collapse" data-parent="#accordion" href="#collapseEight">
-  Animation option
-</a>
-</h4>
-</div>
-<div id="collapseEight" class="panel-collapse collapse">
-<div class="panel-body">
-<form action="" method="get" role="form">
-<div class="row panelmargin">
-Frames Per Cycle : <input type="text" size="3" disabled="disabled"/>
-</div>
-<div class="row panelmargin">
-Frames Per Cycle : <input type="text" size="3" />&nbsp;&nbsp;&nbsp;Pause: <input type="text" size="3"/>
-</div>
-<div class="row panelmargin">
-LOOPS: <input type="text" size="3"/> Times GIF only
-</div>
-<div class="row panelmargin">
-Style:
-<select>
-<option>Scroll</option>
-<option>Scroll in /out</option>
-<option>Rotate</option>
-<option>Swing</option>
-<option>Pulsate</option>
-<option>Ripple head</option>
-<option>Fade</option>
-<option>Step</option>
-<option>Typewriter</option>
-<option>Pulse</option>
-</select>
-</div>
-<div class="row panelmargin">
-<fieldset>
-Scroll IN <br />
-speed <input type="text" placeholder="160" /><br />
-Profile <input type="text" placeholder="0%" /><br/>
-<div class="horizontalimg"></div>
-<div class="verticalimg"></div>
-<div class="rotatimg"></div>
-<div class="angelimg"></div>
-</fieldset>
-</div>
-<div class="row panelmargin">
-<fieldset >
-Scroll Out <br />
-speed <input type="text" placeholder="500" />
-<br />
-Profile <input type="text" placeholder="0%" />
-<div class="horizontalimg"></div>
-<div class="verticalimg"></div>
-<div class="rotatimg"></div>
-<div class="angelimg"></div>
-</fieldset>
-</div>
-</form>
-</div>
-</div>
-</div>		 
+		 
 </div>
 </div>
 </div>
 <div id="footer">
-Designed and develop by MaramSoft 2014 &copy; CopyRight </div>
+  <div id="footer2"> Design and Develop by MaramSoft 2014 &copy; CopyRight </div>
+</div>
 </div>
 </body>
 </html>

@@ -13,6 +13,7 @@ body {
 }
 #header {
 	width: 100%;
+	padding-left:5%;
 }
 .lineborder{
 	border-bottom:#666 thin solid;
@@ -176,10 +177,14 @@ body {
 
 #footer {
 	clear: both;
+	margin-left:5%;
+	padding-bottom:10px;
 }
 
 
 
 #menu {
+	margin-top:10px;
 	width: 100%;
+	margin-bottom:10px;
 }
